@@ -1,1 +1,82 @@
+/*installing c compiler in vm using virtualbox*/
+gcc --version
+/*if it will not work, then you need to write this command:*/
+sudo apt intall build-essential
+
+cd desktop/
+touch hello.c
+
+/*in hello.c file we write simple c program */
+#include <stdio.h>
+int main(int argc, char **argv
+{
+printf("Hello World\n"
+return 0;
+}
+/*
+output: Hello World
+*/
+
+gcc hello.c -o test
+/*then we can see that new file was created*/
+/*to execute test file we need to use this command:*/
+./test
+/*we see that in terminal executed hello world*/
+
+
+
+
+/*installing a kernel onto virtual machine
+
+first of all, we need to download the lastest version of kernel, by using this command:
+*/
+wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-6.2.1.tar.xz
+
+/*Extract the kernel source code to a directory */
+tar xvf linux-6.2.1.tar.xz
+/*Install the necessary build tools and dependencies required to build the kernel.*/
+
+sudo apt-get install build-essential libncurses-dev bison flex libssl-dev libelf-dev
+
+/*Configure the kernel build settings*/
+
+cd linux-6.2.1
+make menuconfig
+
+/*build the kernel by running the following command*/
+make -j$(nproc)
+
+/*install the kernel modules and firmware by running the following commands:*/
+sudo make modules_install
+sudo make firmware_install
+
+/*install the new kernel by copying the compiled kernel image to the appropriate directory:*/
+
+sudo cp arch/x86/boot/bzImage /boot/vmlinuz-6.2.1
+
+/*Update the bootloader configuration to include the new kernel.*/
+
+sudo update-grub
+
+/*Finally, reboot the virtual machine to boot into the newly installed kernel.*/
+
+sudo reboot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
 
